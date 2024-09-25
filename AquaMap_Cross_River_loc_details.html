@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AquaMap Cross River: Mapping the Future of Water Supply</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjTe-y1RTako39gvOIIJbHAa4xfBqS_Yo&callback=initMap&libraries=visualization,drawing" async defer></script>
+    <script>
+      function initMap() {
+        var mapOptions = {
+          center: new google.maps.LatLng(5.0333, 8.3500), // Coordinates for Cross River State
+          zoom: 10
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Example markers for water supply locations with detailed info
+        var locations = [
+          {lat: 5.0333, lng: 8.3500, title: 'Location 1', details: 'This is a major water supply point serving the central region of Cross River State.'},
+          {lat: 5.1234, lng: 8.4567, title: 'Location 2', details: 'This location has a newly installed borehole providing clean water to the local community.'},
+          {lat: 5.2345, lng: 8.5678, title: 'Location 3', details: 'A water treatment plant that processes water from nearby rivers and streams.'},
+          {lat: 5.3456, lng: 8.6789, title: 'Location 4', details: 'An important reservoir that supplies water to several towns in the area.'},
+          {lat: 5.4567, lng: 8.7890, title: 'Location 5', details: 'This site includes a solar-powered water pump installed to improve water access.'},
+          {lat: 5.5678, lng: 8.8901, title: 'Location 6', details: 'A community well that has been recently renovated to ensure safe drinking water.'},
+          {lat: 5.6789, lng: 8.9012, title: 'Location 7', details: 'A small dam that helps in water storage and flood control.'},
+          {lat: 5.7890, lng: 8.0123, title: 'Location 8', details: 'A rural water supply project funded by an international NGO.'},
+          {lat: 5.8901, lng: 8.1234, title: 'Location 9', details: 'A water distribution center that manages the supply to nearby villages.'},
+          {lat: 5.9012, lng: 8.2345, title: 'Location 10', details: 'A rainwater harvesting system implemented to support agricultural activities.'},
+          {lat: 5.9123, lng: 8.3456, title: 'Obudu Dam', details: 'The Obudu Dam, with a storage capacity of 5.25 million cubic meters, serves multiple purposes including water supply, irrigation, and flood control.'},
+          {lat: 5.9234, lng: 8.4567, title: 'Calabar Water Treatment Plant', details: 'This plant treats water from the Calabar River and supplies it to the urban population of Calabar.'}
+        ];
+
+        locations.forEach(function(location) {
+          var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(location.lat, location.lng),
+            map: map,
+            title: location.title,
+            icon: {
+              url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', // Custom icon
+              scaledSize: new google.maps.Size(50, 50)
+            }
+          });
+
+          var infoWindow = new google.maps.InfoWindow({
+            content: '<h3>' + location.title + '</h3><p>' + location.details + '</p>'
+          });
+
+          marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+          });
+        });
+
+        // Heatmap data
+        var heatmapData = locations.map(function(location) {
+          return new google.maps.LatLng(location.lat, location.lng);
+        });
+
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatmapData
+        });
+        heatmap.setMap(map);
+
+        // Drawing tools
+        var drawingManager = new google.maps.drawing.DrawingManager({
+          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
+          }
+        });
+        drawingManager.setMap(map);
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+    <h1>AquaMap Cross River: Mapping the Future of Water Supply</h1>
+    <div id="map" style="width:100%;height:500px;"></div>
+  </body>
+</html>
